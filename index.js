@@ -32,6 +32,9 @@ function start() {
           "View roles",
           "View employees",
           "Update employee role",
+          "Delete department",
+          "Delete role",
+          "Delete employee"
         ]
       })
       .then(function(answer) {
@@ -62,7 +65,19 @@ function start() {
         
         case "Update employee role":
           updateEmployeeRole();
-          break;        
+          break;
+
+        case "Delete department":
+          deleteDepartment();
+          break;
+        
+        case "Delete role":
+          deleteRole();
+          break;
+          
+        case "Delete employee":
+          deleteEmployee();
+          break;  
         }
       });
 }
@@ -209,7 +224,7 @@ function updateEmployeeRole() {
       {
         name: "employeeID",
         type: "input",
-        message: "Please provide the ID of the employee you wish to update."
+        message: "Please provide the ID of the employee to update."
       },
       {
         name: "roleID",
@@ -235,4 +250,79 @@ function updateEmployeeRole() {
         }
       );
     });
+}
+
+// Function for deleting department from database
+function deleteDepartment() {
+    inquirer
+      .prompt([
+        {
+          name: "departmentID",
+          type: "input",
+          message: "What is the ID of the department to delete?"
+        }
+      ])
+      .then(function(answer) {
+        connection.query(
+          "DELETE FROM department WHERE ?",
+          {
+            id: answer.departmentID,
+          },
+          function(err) {
+            if (err) throw err;
+            console.log("Department deleted succesfully.");
+            start();
+          }
+        );
+      });
+}
+
+// Function for deleting role from database
+function deleteRole() {
+    inquirer
+      .prompt([
+        {
+          name: "roleID",
+          type: "input",
+          message: "What is the ID of the role to delete?"
+        }
+      ])
+      .then(function(answer) {
+        connection.query(
+          "DELETE FROM role WHERE ?",
+          {
+            id: answer.roleID,
+          },
+          function(err) {
+            if (err) throw err;
+            console.log("Role deleted succesfully.");
+            start();
+          }
+        );
+      });
+}
+
+// Function for deleting employee from database
+function deleteEmployee() {
+    inquirer
+      .prompt([
+        {
+          name: "employeeID",
+          type: "input",
+          message: "What is the ID of the employee to delete?"
+        }
+      ])
+      .then(function(answer) {
+        connection.query(
+          "DELETE FROM employee WHERE ?",
+          {
+            id: answer.employeeID,
+          },
+          function(err) {
+            if (err) throw err;
+            console.log("Employee deleted succesfully.");
+            start();
+          }
+        );
+      });
 }
