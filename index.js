@@ -162,11 +162,6 @@ function addEmployee() {
         name: "roleID",
         type: "input",
         message: "What is the role ID of the employee you are adding?"
-      },
-      {
-        name: "managerID",
-        type: "input",
-        message: "If any, what is the manager ID of the employee's manager?"
       }
     ])
     .then(function(answer) {
@@ -176,7 +171,6 @@ function addEmployee() {
           first_name: answer.firstName,
           last_name: answer.lastName,
           role_id:answer.roleID,
-          manager_id: answer.managerID
         },
         function(err) {
           if (err) throw err;
